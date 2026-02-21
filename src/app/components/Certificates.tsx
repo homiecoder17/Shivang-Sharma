@@ -1,21 +1,25 @@
-import { Award, ExternalLink } from "lucide-react";
+import { Award, ExternalLink, X } from "lucide-react";
 import { motion } from "motion/react";
+import { useState } from "react";
 
 export function Certificates() {
+  const [previewLink, setPreviewLink] = useState<string | null>(null);
+
   const certificates = [
     {
       title: "DSA: Programming in C",
       issuer: "NPTEL",
       date: "January 2026",
-      description: "Comprehensive course covering data structures and algorithms using C programming language, including arrays, linked lists, stacks, queues, trees, and graphs",
-      link: "#",
+      description:
+        "Comprehensive course covering data structures and algorithms using C programming language, including arrays, linked lists, stacks, queues, trees, and graphs",
+      link: "/certificates/255620067730_nou25_cs20.pdf",
     },
   ];
 
   return (
     <section id="certificates" className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4">
-        <motion.h2 
+        <motion.h2
           className="text-4xl font-bold text-center text-gray-900 mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -48,27 +52,49 @@ export function Certificates() {
                   </div>
                 </div>
               </div>
-              
-              <p className="text-gray-700 mb-3">
-                {cert.description}
-              </p>
-              
+
+              <p className="text-gray-700 mb-3">{cert.description}</p>
+
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">
-                  {cert.date}
-                </span>
-                <a
-                  href={cert.link}
+                <span className="text-sm text-gray-600">{cert.date}</span>
+                <button
+                  type="button"
+                  onClick={() => setPreviewLink(cert.link)}
                   className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors"
                 >
                   View Certificate
                   <ExternalLink size={16} />
-                </a>
+                </button>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {previewLink && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg w-full max-w-5xl h-[85vh] shadow-xl overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Certificate Preview
+              </h3>
+              <button
+                type="button"
+                onClick={() => setPreviewLink(null)}
+                className="p-1 text-gray-600 hover:text-gray-900"
+                aria-label="Close preview"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <iframe
+              src={previewLink}
+              title="Certificate Preview"
+              className="w-full h-[calc(85vh-57px)]"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
