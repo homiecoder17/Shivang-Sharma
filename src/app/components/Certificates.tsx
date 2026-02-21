@@ -12,7 +12,7 @@ export function Certificates() {
       date: "January 2026",
       description:
         "Comprehensive course covering data structures and algorithms using C programming language, including arrays, linked lists, stacks, queues, trees, and graphs",
-      link: "/certificates/255620067730_nou25_cs20.pdf",
+      link: `${import.meta.env.BASE_URL}certificates/255620067730_nou25_cs20.pdf`,
     },
   ];
 
